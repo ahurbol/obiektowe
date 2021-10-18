@@ -1,5 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+application {
+    mainClassName = 'agh.ics.oop.World'
 }
 
 group 'org.example'
@@ -16,4 +21,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+run {
+    args "f", "f", "r", "l"
 }

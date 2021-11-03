@@ -1,5 +1,7 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+
 public class World {
     public static void run(Direction[] dir) {
         for (Direction x : dir) {
@@ -35,15 +37,15 @@ public class World {
 
     public static void main(String[] args) {
         System.out.println("system wystartował");
-        Direction[] dir = changeToDirection(args);
-        run(dir);
-
-        Vector2d position1 = new Vector2d(1, 2);
-        System.out.println(position1);
-        Vector2d position2 = new Vector2d(-2, 1);
-        System.out.println(position2);
-        System.out.println(position1.add(position2));
-
+//        Direction[] dir = changeToDirection(args);
+//        run(dir);
+        Animal dog = new Animal();
+        System.out.println(dog.toString());
+        ArrayList<MoveDirection> dir = new ArrayList<MoveDirection>(OptionsParser.parse(args));
+        for (MoveDirection arg : dir) {
+            dog.move(arg);
+        }
+        System.out.println(dog.toString());
         System.out.println("system zatrzymał się");
     }
 }

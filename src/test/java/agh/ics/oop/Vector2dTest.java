@@ -89,7 +89,7 @@ public class Vector2dTest {
     }
 
     @Test
-    public void substractTest() {
+    public void subtractTest() {
         Vector2d position1 = new Vector2d(1,2);
         Vector2d position2 = new Vector2d(-2,1);
         Vector2d position3 = new Vector2d(2, 0);

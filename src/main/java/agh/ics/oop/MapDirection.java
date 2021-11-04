@@ -12,6 +12,15 @@ public enum MapDirection {
         };
     }
 
+    public String symbols() {
+        return switch (this) {
+            case NORTH -> "N";
+            case SOUTH -> "S";
+            case WEST -> "W";
+            case EAST -> "E";
+        };
+    }
+
     public MapDirection next() {
         return switch (this) {
             case NORTH -> MapDirection.EAST;

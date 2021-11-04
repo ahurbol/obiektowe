@@ -24,5 +24,5 @@ test {
 }
 
 run {
-    args "o", "b", "r", "o"
+    args "f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"
 }

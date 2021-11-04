@@ -39,13 +39,19 @@ public class World {
         System.out.println("system wystartował");
 //        Direction[] dir = changeToDirection(args);
 //        run(dir);
-        Animal dog = new Animal();
-        System.out.println(dog.toString());
-        ArrayList<MoveDirection> dir = new ArrayList<MoveDirection>(OptionsParser.parse(args));
-        for (MoveDirection arg : dir) {
-            dog.move(arg);
-        }
-        System.out.println(dog.toString());
+//        Animal dog = new Animal();
+//        System.out.println(dog.toString());
+//        ArrayList<MoveDirection> dir = new ArrayList<MoveDirection>(OptionsParser.parse(args));
+//        for (MoveDirection arg : dir) {
+//            dog.move(arg);
+//        }
+//        System.out.println(dog.toString());
+
+        MoveDirection[] directions = new ArrayList<MoveDirection>(OptionsParser.parse(args)).toArray(new MoveDirection[0]);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
         System.out.println("system zatrzymał się");
     }
 }

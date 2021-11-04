@@ -9,13 +9,11 @@ public class Animal {
 
     public Animal(IWorldMap map) {
         this.map = map;
-        map.place(this);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         this.position = initialPosition;
         this.map = map;
-        map.place(this);
     }
 
     public String toString() {

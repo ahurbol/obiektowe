@@ -7,7 +7,8 @@ public class OptionsParser {
         int size = 0;
         for (String arg : args) {
             switch (arg) {
-                case "forward", "f", "backward", "b", "right", "r", "left", "l" -> size++;            }
+                case "forward", "f", "backward", "b", "right", "r", "left", "l" -> size++;
+            }
         }
         int it = 0;
         MoveDirection[] dir = new MoveDirection[size];

@@ -2,13 +2,12 @@ package agh.ics.oop;
 
 import java.util.Random;
 
-public class GrassField extends AbstractWorldMap{
+public class GrassField extends AbstractWorldMap {
     private final int grassAmount;
 
     public GrassField(int amount) {
         this.grassAmount = amount;
         placeGrass(this.grassAmount);
-
     }
 
     public void placeGrass(int amount) {
@@ -38,11 +37,11 @@ public class GrassField extends AbstractWorldMap{
         return lowerLeft;
     }
 
-    public Vector2d findUpperRight(){
+    public Vector2d findUpperRight() {
         int inf = (int) Double.POSITIVE_INFINITY;
         Vector2d upperRight = new Vector2d(-inf, -inf);
 
-        for(Vector2d key : list.keySet()) {
+        for (Vector2d key : list.keySet()) {
             upperRight = upperRight.upperRight(key);
         }
         return upperRight;

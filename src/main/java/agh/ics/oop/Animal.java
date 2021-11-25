@@ -9,7 +9,6 @@ public class Animal extends AbstractWorldMapElement {
     private final AbstractWorldMap map;
     private final ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
-
     public Animal(AbstractWorldMap map, Vector2d initialPosition) {
         this.position = initialPosition;
         this.map = map;

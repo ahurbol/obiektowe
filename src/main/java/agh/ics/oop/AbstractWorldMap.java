@@ -1,6 +1,5 @@
 package agh.ics.oop;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

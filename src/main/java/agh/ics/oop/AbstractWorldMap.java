@@ -17,7 +17,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     }
 
     public boolean canMoveTo(Vector2d position) {
-        return (objectAt(position) instanceof Animal);
+        return !(objectAt(position) instanceof Animal);
     }
 
     public boolean place(Animal animal) {

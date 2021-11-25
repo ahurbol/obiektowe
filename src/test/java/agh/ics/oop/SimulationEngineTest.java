@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimulationEngineTest {
 
-    private final IWorldMap map = new RectangularMap(5, 5);
+    private final AbstractWorldMap map = new RectangularMap(5, 5);
     private final Vector2d[] positions1 = new Vector2d[] {new Vector2d(0,0), new Vector2d(1,1) };
     private final Vector2d[] positions2 = new Vector2d[] {new Vector2d(0,0), new Vector2d(1,1), new Vector2d(1,2) };
     private final Vector2d[] positions3 = new Vector2d[] {new Vector2d(0,0), new Vector2d(0,1), new Vector2d(1,1) };

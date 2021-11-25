@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RectangularMapTest {
     @Test
     public void testCanMoveTo(){
-        IWorldMap rectangularMap = new RectangularMap(6, 6);
+        AbstractWorldMap rectangularMap = new RectangularMap(6, 6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(rectangularMap, initPos[0]), new Animal(rectangularMap, initPos[1])};
@@ -37,7 +37,7 @@ public class RectangularMapTest {
 
     @Test
     public void testIsOccupied(){
-        IWorldMap rectangularMap = new RectangularMap(6, 6);
+        AbstractWorldMap rectangularMap = new RectangularMap(6, 6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(rectangularMap, initPos[0]), new Animal(rectangularMap, initPos[1])};
@@ -65,7 +65,7 @@ public class RectangularMapTest {
 
     @Test
     public void testObjectAt(){
-        IWorldMap rectangularMap = new RectangularMap(6, 6);
+        AbstractWorldMap rectangularMap = new RectangularMap(6, 6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(rectangularMap, initPos[0]), new Animal(rectangularMap, initPos[1])};

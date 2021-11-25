@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class SimulationEngine implements IEngine {
     private final MoveDirection[] moves;
-    private final IWorldMap map;
+    private final AbstractWorldMap map;
     private final ArrayList<Animal> animals;
 
-    public SimulationEngine(MoveDirection[] moves, IWorldMap map, Vector2d[] initialPositions) {
+    public SimulationEngine(MoveDirection[] moves, AbstractWorldMap map, Vector2d[] initialPositions) {
         this.moves = moves;
         this.map = map;
         this.animals = new ArrayList<>();
@@ -25,6 +25,7 @@ public class SimulationEngine implements IEngine {
             int animalIdx = i % animalsSize;
             Animal animal = this.animals.get(animalIdx);
             animal.move(this.moves[i]);
+            System.out.println(map);
         }
     }
 }

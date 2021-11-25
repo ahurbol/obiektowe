@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GrassFieldTest {
+
     @Test
     public void testCanMoveTo(){
-        IWorldMap grassField = new GrassField(6);
+        AbstractWorldMap grassField = new GrassField(6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(grassField, initPos[0]), new Animal(grassField, initPos[1])};
@@ -38,7 +39,7 @@ public class GrassFieldTest {
 
     @Test
     public void testIsOccupied(){
-        IWorldMap grassField = new GrassField(6);
+        AbstractWorldMap grassField = new GrassField(6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(grassField, initPos[0]), new Animal(grassField, initPos[1])};
@@ -64,7 +65,7 @@ public class GrassFieldTest {
 
     @Test
     public void testObjectAt(){
-        IWorldMap grassField = new GrassField(6);
+        AbstractWorldMap grassField = new GrassField(6);
 
         Vector2d[] initPos = {new Vector2d(0, 0), new Vector2d(2, 3)};
         Animal[] animals = {new Animal(grassField, initPos[0]), new Animal(grassField, initPos[1])};

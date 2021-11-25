@@ -1,54 +1,49 @@
 package agh.ics.oop;
 
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap {
-    final List<IMapElement> list;
+public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+    protected Map<Vector2d, AbstractWorldMapElement> list = new LinkedHashMap<>();
     final MapVisualizer visualizer;
 
+    protected abstract Vector2d findLowerLeft();
+
+    protected abstract Vector2d findUpperRight();
+
     public AbstractWorldMap() {
-        list = new LinkedList<>();
         visualizer = new MapVisualizer(this);
     }
 
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position) || objectAt(position).getClass() != Animal.class;
+        return (objectAt(position) instanceof Animal);
     }
 
     public boolean place(Animal animal) {
-        Vector2d vec = animal.getPosition();
-        if (canMoveTo(vec)) {
-            this.list.add(animal);
+        Vector2d position = animal.getPosition();
+        if (canMoveTo(position)) {
+            this.list.put(position, animal);
             return true;
         }
         return false;
     }
 
     public boolean isOccupied(Vector2d position) {
-        return this.list.stream().anyMatch(o -> o.getPosition().equals(position));
+        return this.list.containsKey(position);
     }
 
     public Object objectAt(Vector2d position) {
-        IMapElement elem = null;
-        for (IMapElement animal : this.list) {
-            if (animal.getPosition().equals(position)) {
-                if (animal.getClass() == Animal.class) {
-                    return animal;
-                } else elem = animal;
-            }
-        }
-        return elem;
+        return this.list.get(position);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        AbstractWorldMapElement animal = list.get(oldPosition);
+        this.list.remove(oldPosition);
+        this.list.put(newPosition, animal);
     }
 
     public String toString() {
-        int minX = this.list.stream().min(Comparator.comparingInt(o -> o.getPosition().x)).orElse(new Grass(new Vector2d(2,2))).getPosition().x;
-        int maxX = this.list.stream().max(Comparator.comparingInt(o -> o.getPosition().x)).orElse(new Grass(new Vector2d(2,2))).getPosition().x;
-
-        int minY = this.list.stream().min(Comparator.comparingInt(o -> o.getPosition().y)).orElse(new Grass(new Vector2d(2,2))).getPosition().y;
-        int maxY = this.list.stream().max(Comparator.comparingInt(o -> o.getPosition().y)).orElse(new Grass(new Vector2d(2,2))).getPosition().y;
-
-        return visualizer.draw(new Vector2d(minX, minY), new Vector2d(maxX, maxY));
+        return visualizer.draw(findLowerLeft(), findUpperRight());
     }
 }

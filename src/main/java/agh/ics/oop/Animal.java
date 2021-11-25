@@ -1,19 +1,34 @@
 package agh.ics.oop;
 
 
-public class Animal implements IMapElement {
+import java.util.ArrayList;
 
-    private Vector2d position = new Vector2d(2, 2);
+public class Animal extends AbstractWorldMapElement {
+
     private MapDirection orient = MapDirection.NORTH;
-    private final IWorldMap map;
+    private final AbstractWorldMap map;
+    private final ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
-    public Animal(IWorldMap map) {
-        this.map = map;
-    }
 
-    public Animal(IWorldMap map, Vector2d initialPosition) {
+    public Animal(AbstractWorldMap map, Vector2d initialPosition) {
         this.position = initialPosition;
         this.map = map;
+        map.place(this);
+        this.addObserver(map);
+    }
+
+    public void addObserver(IPositionChangeObserver observer) {
+        this.observers.add(observer);
+    }
+
+    public void removeObserver(IPositionChangeObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        for (IPositionChangeObserver observer : this.observers) {
+            observer.positionChanged(oldPosition, newPosition);
+        }
     }
 
     public String toString() {
@@ -24,9 +39,6 @@ public class Animal implements IMapElement {
         return this.orient;
     }
 
-    public Vector2d getPosition() {
-        return this.position;
-    }
 
     public boolean isAt(Vector2d pos) {
         return this.position.equals(pos);
@@ -39,12 +51,14 @@ public class Animal implements IMapElement {
             case FORWARD -> {
                 Vector2d newPosition = this.position.add(this.orient.toUnitVector());
                 if (this.map.canMoveTo(newPosition)) {
+                    this.positionChanged(this.position, newPosition);
                     this.position = newPosition;
                 }
             }
             case BACKWARD -> {
                 Vector2d newPosition = this.position.subtract(this.orient.toUnitVector());
                 if (this.map.canMoveTo(newPosition)) {
+                    this.positionChanged(this.position, newPosition);
                     this.position = newPosition;
                 }
 

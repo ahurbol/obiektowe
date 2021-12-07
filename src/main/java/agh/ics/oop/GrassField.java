@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
     private final int grassAmount;
+    private MapBoundary mapBoundary = new MapBoundary();
 
     public GrassField(int amount) {
         this.grassAmount = amount;
@@ -21,30 +22,17 @@ public class GrassField extends AbstractWorldMap {
             if (!isOccupied(pos)) {
                 Grass grass = new Grass(pos);
                 list.put(pos, grass);
+                mapBoundary.addElement(grass);
                 i++;
             }
         }
     }
-
-
-    public Vector2d findLowerLeft() {
-        int inf = (int) Double.POSITIVE_INFINITY;
-        Vector2d lowerLeft = new Vector2d(inf, inf);
-
-        for (Vector2d key : list.keySet()) {
-            lowerLeft = lowerLeft.lowerLeft(key);
-        }
-        return lowerLeft;
-    }
-
-    public Vector2d findUpperRight() {
-        int inf = (int) Double.POSITIVE_INFINITY;
-        Vector2d upperRight = new Vector2d(-inf, -inf);
-
-        for (Vector2d key : list.keySet()) {
-            upperRight = upperRight.upperRight(key);
-        }
-        return upperRight;
+    @Override
+    public boolean place(Animal animal) {
+        super.place(animal);
+        animal.addObserver(this.mapBoundary);
+        this.mapBoundary.addElement(animal);
+        return true;
     }
 
     @Override
@@ -53,7 +41,17 @@ public class GrassField extends AbstractWorldMap {
         super.positionChanged(oldPosition, newPosition);
         if (grass instanceof Grass) {
             this.placeGrass(1);
+            this.mapBoundary.removeElement(grass);
         }
     }
+
+    public Vector2d findLowerLeft() {
+        return this.mapBoundary.findLowerLeft();
+    }
+
+    public Vector2d findUpperRight() {
+        return this.mapBoundary.findUpperRight();
+    }
+
 
 }

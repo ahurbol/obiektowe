@@ -8,6 +8,7 @@ public class OptionsParser {
         for (String arg : args) {
             switch (arg) {
                 case "forward", "f", "backward", "b", "right", "r", "left", "l" -> size++;
+                default -> throw new IllegalArgumentException(arg + " is not legal move specification");
             }
         }
         int it = 0;

@@ -13,7 +13,6 @@ public class Animal extends AbstractWorldMapElement {
         this.position = initialPosition;
         this.map = map;
         map.place(this);
-        this.addObserver(map);
     }
 
     public void addObserver(IPositionChangeObserver observer) {
@@ -24,7 +23,7 @@ public class Animal extends AbstractWorldMapElement {
         this.observers.remove(observer);
     }
 
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+    private void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         for (IPositionChangeObserver observer : this.observers) {
             observer.positionChanged(oldPosition, newPosition);
         }
@@ -44,24 +43,22 @@ public class Animal extends AbstractWorldMapElement {
     }
 
     public void move(MoveDirection direction) {
+        Vector2d oldPos = this.position;
+        Vector2d newPos;
         switch (direction) {
-            case RIGHT -> this.orient = this.orient.next();
-            case LEFT -> this.orient = this.orient.previous();
+            case RIGHT -> {this.orient = this.orient.next(); return;}
+            case LEFT -> {this.orient = this.orient.previous(); return;}
             case FORWARD -> {
-                Vector2d newPosition = this.position.add(this.orient.toUnitVector());
-                if (this.map.canMoveTo(newPosition)) {
-                    this.positionChanged(this.position, newPosition);
-                    this.position = newPosition;
-                }
+                 newPos = this.position.add(this.orient.toUnitVector());
             }
             case BACKWARD -> {
-                Vector2d newPosition = this.position.subtract(this.orient.toUnitVector());
-                if (this.map.canMoveTo(newPosition)) {
-                    this.positionChanged(this.position, newPosition);
-                    this.position = newPosition;
-                }
-
+                newPos = this.position.subtract(this.orient.toUnitVector());
             }
+            default -> {return;}
+        }
+        if (this.map.canMoveTo(newPos)) {
+            this.position = newPos;
+            this.positionChanged(oldPos, newPos);
         }
     }
 }

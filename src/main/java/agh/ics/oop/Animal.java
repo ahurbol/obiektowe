@@ -13,7 +13,7 @@ public class Animal extends AbstractWorldMapElement {
         this.position = initialPosition;
         this.map = map;
         map.place(this);
-        this.addObserver(map);
+        this.addObserver(map);  // to nie jest dobre miejsce
     }
 
     public void addObserver(IPositionChangeObserver observer) {
@@ -24,7 +24,7 @@ public class Animal extends AbstractWorldMapElement {
         this.observers.remove(observer);
     }
 
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {   
         for (IPositionChangeObserver observer : this.observers) {
             observer.positionChanged(oldPosition, newPosition);
         }

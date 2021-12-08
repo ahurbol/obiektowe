@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
-    protected Map<Vector2d, AbstractWorldMapElement> list = new LinkedHashMap<>();
-    final MapVisualizer visualizer;
+    protected Map<Vector2d, AbstractWorldMapElement> list = new LinkedHashMap<>();  // dziwna nazwa dla mapy
+    final MapVisualizer visualizer; // czemu nie private?
 
-    protected abstract Vector2d findLowerLeft();
+    protected abstract Vector2d findLowerLeft();    // polecam getLowerLeft
 
     protected abstract Vector2d findUpperRight();
 

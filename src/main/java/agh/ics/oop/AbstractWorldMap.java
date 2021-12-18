@@ -5,11 +5,20 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     protected Map<Vector2d, AbstractWorldMapElement> list = new LinkedHashMap<>();
-    final MapVisualizer visualizer = new MapVisualizer(this);
+    protected final MapVisualizer visualizer = new MapVisualizer(this);
+    protected final MapBoundary mapBoundary = new MapBoundary();
 
-    protected abstract Vector2d findLowerLeft();
+    public abstract Vector2d findLowerLeft();
 
-    protected abstract Vector2d findUpperRight();
+    public abstract Vector2d findUpperRight();
+
+    public Map<Vector2d, AbstractWorldMapElement> getAnimals() {
+        return this.list;
+    }
+
+    public AbstractWorldMapElement getElement(Vector2d position){
+        return this.list.get(position);
+    }
 
     public boolean canMoveTo(Vector2d position) {
         return !(objectAt(position) instanceof Animal);
@@ -19,7 +28,9 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             this.list.put(position, animal);
+            mapBoundary.positionChanged(new Vector2d(0,0), position);
             animal.addObserver(this);
+            animal.addObserver(mapBoundary);
             return true;
         } else {
             throw new IllegalArgumentException(position + " - this position is occupied");

@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
     private final int grassAmount;
-    private MapBoundary mapBoundary = new MapBoundary();
 
     public GrassField(int amount) {
         this.grassAmount = amount;
@@ -22,17 +21,11 @@ public class GrassField extends AbstractWorldMap {
             if (!isOccupied(pos)) {
                 Grass grass = new Grass(pos);
                 list.put(pos, grass);
-                mapBoundary.addElement(grass);
+                mapBoundary.positionChanged(new Vector2d(0,0), pos);
+                grass.addObserver(mapBoundary);
                 i++;
             }
         }
-    }
-    @Override
-    public boolean place(Animal animal) {
-        super.place(animal);
-        animal.addObserver(this.mapBoundary);
-        this.mapBoundary.addElement(animal);
-        return true;
     }
 
     @Override
@@ -41,17 +34,18 @@ public class GrassField extends AbstractWorldMap {
         super.positionChanged(oldPosition, newPosition);
         if (grass instanceof Grass) {
             this.placeGrass(1);
-            this.mapBoundary.removeElement(grass);
         }
     }
 
     public Vector2d findLowerLeft() {
-        return this.mapBoundary.findLowerLeft();
+        if(mapBoundary.xx.isEmpty())
+            return new Vector2d(0, 0);
+        return new Vector2d (mapBoundary.xx.first().x, mapBoundary.yy.first().y);
     }
 
     public Vector2d findUpperRight() {
-        return this.mapBoundary.findUpperRight();
+        if (mapBoundary.xx.isEmpty())
+            return new Vector2d(0, 0);
+        return new Vector2d(mapBoundary.xx.last().x, mapBoundary.yy.last().y);
     }
-
-
 }

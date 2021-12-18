@@ -1,13 +1,9 @@
 package agh.ics.oop;
 
-
-import java.util.ArrayList;
-
 public class Animal extends AbstractWorldMapElement {
 
     private MapDirection orient = MapDirection.NORTH;
     private final AbstractWorldMap map;
-    private final ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
     public Animal(AbstractWorldMap map, Vector2d initialPosition) {
         this.position = initialPosition;
@@ -15,18 +11,14 @@ public class Animal extends AbstractWorldMapElement {
         map.place(this);
     }
 
-    public void addObserver(IPositionChangeObserver observer) {
-        this.observers.add(observer);
-    }
-
-    public void removeObserver(IPositionChangeObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    private void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-        for (IPositionChangeObserver observer : this.observers) {
-            observer.positionChanged(oldPosition, newPosition);
-        }
+    @Override
+    public String getPath() {
+        return switch (((Animal) this).getOrient()) {
+            case EAST -> "src/main/resources/right.png";
+            case WEST -> "src/main/resources/left.png";
+            case NORTH -> "src/main/resources/up.png";
+            case SOUTH -> "src/main/resources/down.png";
+        };
     }
 
     public String toString() {
@@ -58,7 +50,7 @@ public class Animal extends AbstractWorldMapElement {
         }
         if (this.map.canMoveTo(newPos)) {
             this.position = newPos;
-            this.positionChanged(oldPos, newPos);
+            map.positionChanged(oldPos, newPos);
         }
     }
 }

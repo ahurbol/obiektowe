@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 public class GuiElementBox {
     private final VBox vbox;
 
-    public GuiElementBox(AbstractWorldMapElement elem) throws FileNotFoundException {
+    public GuiElementBox(AbstractWorldMapElement elem) throws FileNotFoundException {   // czy na pewno throws?
         Image image = null;
         try {
             image = new Image(new FileInputStream(elem.getPath()));

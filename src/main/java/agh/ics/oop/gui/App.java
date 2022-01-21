@@ -17,10 +17,10 @@ import java.io.FileNotFoundException;
 
 
 public class App extends Application implements IPositionChangeObserver {
-    AbstractWorldMap map;
-    SimulationEngine engine;
-    GridPane grid = new GridPane();
-    public static int moveDelay;
+    AbstractWorldMap map;   // może private final?
+    SimulationEngine engine;    // jw.
+    GridPane grid = new GridPane(); // jw.
+    public static int moveDelay;    // static? public?
     int size = 50;
 
 
@@ -49,7 +49,7 @@ public class App extends Application implements IPositionChangeObserver {
 
         button.setOnAction(event -> {
             MoveDirection[] moves = OptionsParser.parse(textField.getText().split(" "));
-            engine.getMoves(moves);
+            engine.getMoves(moves); // a nie setMoves?
             Thread thread = new Thread(engine);
             thread.start();
         });
@@ -83,7 +83,7 @@ public class App extends Application implements IPositionChangeObserver {
         });
     }
 
-    private void grid() throws FileNotFoundException {
+    private void grid() throws FileNotFoundException {  // nazwa
         grid.setGridLinesVisible(false);
         grid.getChildren().clear();
         grid.getColumnConstraints().clear();
